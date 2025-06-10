@@ -1,0 +1,148 @@
+
+Download postgresql and set the password
+
+after login pgAdmin4 create the database named as employee_management
+set the password for database employee_management
+
+
+// create Sequence first
+
+CREATE SEQUENCE wcs00
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+//After the role table
+
+
+CREATE TABLE wcs_role (
+    id INTEGER PRIMARY KEY,
+    code varchar(100) NOT NULL,
+    name VARCHAR(100) NOT NULL
+);
+// after create the wcs role
+
+
+CREATE TABLE wcs_user (
+    id INTEGER PRIMARY KEY DEFAULT NEXTVAL('wcs00'),
+    name VARCHAR(200) NOT NULL,
+    password TEXT NOT NULL,
+    email VARCHAR(100) UNIQUE,
+    phone NUMERIC(10,0),
+    role_id INTEGER,
+    CONSTRAINT fk_user_role_id FOREIGN KEY (role_id) REFERENCES wcs_role(id)
+);
+
+// insert the data into wcs_role
+
+
+INSERT INTO wcs_role (id, code, name) VALUES
+(1, 'ADMIN', 'Administrator'),
+(2, 'USER', 'Standard User'),
+(3, 'MANAGER', 'Manager'),
+(4, 'SUPPORT', 'Support Staff'),
+(5, 'GUEST', 'Guest User');
+
+
+Set up the application properties or application.yml
+
+spring.datasource.url=jdbc:postgresql://localhost:5432/employee_management
+spring.datasource.username=postgres
+spring.datasource.password=9502
+
+spring.datasource.driver-class-name=org.postgresql.Driver
+
+spring.jpa.hibernate.ddl-auto=validate
+spring.jpa.show-sql=true
+spring.jpa.properties.hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect
+spring.jpa.properties.hibernate.enable_lazy_load_no_trans=true
+
+server.port=8080
+server.servlet.context-path=/api
+
+logging.level.root=INFO
+logging.level.org.springframework.security=DEBUG
+logging.level.org.hibernate.SQL=DEBUG
+logging.level.org.hibernate.type.descriptor.sql.BasicBinder=TRACE
+
+security.jwt.secret=my-secret-authentication-jwt-key-which-is-at-least-32-chars
+security.jwt.expiration=3600000
+
+
+Dependency need to be added
+
+//
+
+
+<dependencies>
+		<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt-api</artifactId>
+			<version>0.11.5</version>
+		</dependency>
+		<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt-impl</artifactId>
+			<version>0.11.5</version>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>io.jsonwebtoken</groupId>
+			<artifactId>jjwt-jackson</artifactId>
+			<version>0.11.5</version>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-thymeleaf</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-web</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.thymeleaf.extras</groupId>
+			<artifactId>thymeleaf-extras-springsecurity6</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-devtools</artifactId>
+			<scope>runtime</scope>
+			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<optional>true</optional>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+		</<dependencies>
+//
+
+
+
