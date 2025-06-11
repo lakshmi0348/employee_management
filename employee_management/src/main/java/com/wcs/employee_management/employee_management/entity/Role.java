@@ -21,4 +21,7 @@ public class Role {
 
     @Column(name = "name", columnDefinition = "varchar(20)")
     private String name;
+
+    @Column(name = "is_active")
+    private boolean isActive = true;
 }

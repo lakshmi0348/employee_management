@@ -18,7 +18,7 @@ public class UserResponseDTO {
 
     public UserResponseDTO(User user) {
         this.id = user.getId();
-        this.name = user.getName();
+        this.name = user.getFullName();
         this.email = user.getEmail();
         this.phone = user.getPhone();
         this.roleName = user.getRole() != null ? user.getRole().getName() : null;

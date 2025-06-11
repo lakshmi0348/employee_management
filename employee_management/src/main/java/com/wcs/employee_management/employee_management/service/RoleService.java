@@ -8,4 +8,12 @@ public interface RoleService {
     List<Role> getAllRoles();
 
     Role getRoleById(Integer id);
+
+    Role updateRole(Integer id, Role updatedRole);
+
+    void deleteRole(Integer id);
+
+    List<Role> getRolesByIsActive(boolean isActive);
+
+    Role partialChangeRole(Integer id, Role role);
 }

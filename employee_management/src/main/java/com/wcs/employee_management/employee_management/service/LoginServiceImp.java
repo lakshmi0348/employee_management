@@ -45,11 +45,19 @@ public class LoginServiceImp implements LoginService {
 
         return new LoginResponse(
                 user.getId(),
-                user.getName(),
+                user.getFullName(),
+                user.getLastName(),
+                user.getDateOfBirth(),
+                user.getDepartment(),
+                user.getEmploymentType(),
+                user.getJobTitle(),
+                user.getDateOfJoining(),
+                user.getGender(),
                 user.getEmail(),
                 user.getPhone(),
                 token,
-                user.getRole()
+                user.getRole(),
+                user.isUserActive()
         );
     }
 }
