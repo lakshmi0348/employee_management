@@ -42,7 +42,6 @@ public class RoleController {
     }
 
 
-
     @GetMapping("/getRoleById")
     public ResponseEntity<Role> getRoleById(@RequestParam(required = false) String id) {
         try {

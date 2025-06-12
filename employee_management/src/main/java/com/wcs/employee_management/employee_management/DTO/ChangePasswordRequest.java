@@ -10,7 +10,5 @@ public class ChangePasswordRequest {
     private String dateOfBirth;
     private String phoneNumber;
     private String newPassword;
-
-
 }
 

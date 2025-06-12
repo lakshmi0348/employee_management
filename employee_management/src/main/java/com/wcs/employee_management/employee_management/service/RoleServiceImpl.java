@@ -25,8 +25,7 @@ public class RoleServiceImpl implements RoleService {
                 .orElseThrow(() -> new InvalidRoleException("Role not found with ID: " + id));
     }
 
-    public Role updateRole(Integer id, Role updatedRole)
-    {
+    public Role updateRole(Integer id, Role updatedRole) {
         Role existingRole = roleRepository.findById(id)
                 .orElseThrow(() -> new InvalidRoleException("Role not found with ID: " + id));
 
@@ -34,6 +33,7 @@ public class RoleServiceImpl implements RoleService {
         existingRole.setName(updatedRole.getName());
         return roleRepository.save(existingRole);
     }
+
     public void deleteRole(Integer id) {
         Role role = roleRepository.findById(id)
                 .orElseThrow(() -> new InvalidUserException("Role not found with ID: " + id));
@@ -41,9 +41,11 @@ public class RoleServiceImpl implements RoleService {
         role.setActive(false);
         roleRepository.save(role);
     }
+
     public List<Role> getRolesByIsActive(boolean isActive) {
         return roleRepository.findByIsActive(isActive);
     }
+
     public Role partialChangeRole(Integer id, Role rolePatch) {
         Role existingRole = roleRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Role not found with ID: " + id));
@@ -61,7 +63,6 @@ public class RoleServiceImpl implements RoleService {
 
         return roleRepository.save(existingRole);
     }
-
 
 
 }

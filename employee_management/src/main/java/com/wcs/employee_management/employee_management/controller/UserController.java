@@ -27,20 +27,16 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-   //@PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/create")
     public ResponseEntity<Object> createUser(@RequestBody UserCreationRequest userCreateRequest) {
         try {
             User createdUser = userService.createUser(userCreateRequest);
             return new ResponseEntity<>(createdUser, HttpStatus.CREATED);
-        } catch (UserValidatingException ex) {
-            // Automatically handled by @ExceptionHandler if global handler is configured.
-            throw ex;
+        } catch (InvalidUserException ex) {
+            return new ResponseEntity<>(ex, HttpStatus.BAD_REQUEST);
         } catch (Exception ex) {
-            Map<String, Object> error = new HashMap<>();
-            error.put("status", HttpStatus.INTERNAL_SERVER_ERROR.value());
-            error.put("message", "Internal server error");
-            return new ResponseEntity<>(error, HttpStatus.INTERNAL_SERVER_ERROR);
+            return new ResponseEntity<>(ex, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 
@@ -63,7 +59,7 @@ public class UserController {
     }
 
     @GetMapping("/search")
-    public ResponseEntity<List<UserResponseDTO>> searchUsers(@RequestParam String searchText){
+    public ResponseEntity<List<UserResponseDTO>> searchUsers(@RequestParam String searchText) {
         try {
             List<UserResponseDTO> users = userService.searchByUser(searchText);
             return ResponseEntity.ok(users);
@@ -110,6 +106,7 @@ public class UserController {
                     .body("An error occurred while updating the user.");
         }
     }
+
     @PatchMapping("/updateUsers/{id}")
     public ResponseEntity<?> patchUser(@PathVariable Integer id, @RequestBody User userPatch) {
         try {

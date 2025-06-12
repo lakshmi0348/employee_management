@@ -21,6 +21,7 @@ public class ResetPasswordController {
     private UserService userService;
     @Autowired
     private UserRepository userRepository;
+
     @PostMapping("/resetPassword")
     public ResponseEntity<String> resetPasswordSecure(@RequestBody ChangePasswordRequest request) {
         try {
@@ -34,13 +35,13 @@ public class ResetPasswordController {
         }
     }
 
-@PostMapping("/changePassword")
-        public ResponseEntity<?> changePassword(@RequestBody ChangeExistingPassword request,
-                UserCreationRequest userCreationRequest) {
-    if (userCreationRequest == null) {
-        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("User not authenticated.");
-    }
-            return userService.changePassword(request, userCreationRequest);
+    @PostMapping("/changePassword")
+    public ResponseEntity<?> changePassword(@RequestBody ChangeExistingPassword request,
+                                            UserCreationRequest userCreationRequest) {
+        if (userCreationRequest == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("User not authenticated.");
         }
+        return userService.changePassword(request, userCreationRequest);
+    }
 
 }

@@ -7,8 +7,6 @@ import com.wcs.employee_management.employee_management.DTO.UserResponseDTO;
 import com.wcs.employee_management.employee_management.entity.User;
 import com.wcs.employee_management.employee_management.exception.InvalidSearchQueryException;
 import com.wcs.employee_management.employee_management.exception.InvalidUserException;
-import com.wcs.employee_management.employee_management.exception.UserValidatingException;
-import com.wcs.employee_management.employee_management.repository.RoleRepository;
 import com.wcs.employee_management.employee_management.repository.UserRepository;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
@@ -38,25 +36,25 @@ public class UserServiceImp implements UserService {
     @Autowired
     private UserRepository userRepository;
     @Autowired
-    private RoleRepository rolesRepository;
-    @Autowired
     private PasswordEncoder passwordEncoder;
 
     @Transactional
     public User createUser(UserCreationRequest request) {
-        User user =request.getUser();
-            Integer nextId = userRepository.getNextUserId();
-            user.setId(nextId);
-            return userRepository.save(user);
+        User user = request.getUser();
+        Integer nextId = userRepository.getNextUserId();
+        user.setId(nextId);
+        return userRepository.save(user);
     }
+
     public User getUserById(Integer id) {
         return userRepository.findById(id)
                 .orElseThrow(() -> new InvalidUserException("User not found with ID: " + id));
     }
+
     public List<User> getAllUsers() {
         return userRepository.findAll();
     }
-    
+
     public List<User> findByIsActive(boolean isActive) {
         return userRepository.findByIsUserActive(isActive);
     }
@@ -81,7 +79,7 @@ public class UserServiceImp implements UserService {
 
     public void resetPasswordWithVerification(ChangePasswordRequest request) {
         User user = userRepository.findByEmail(request.getEmail().trim().toLowerCase());
-        if(user!=null) {
+        if (user != null) {
             // Parse and clean inputs
             LocalDate inputDob;
             try {
@@ -109,7 +107,7 @@ public class UserServiceImp implements UserService {
             userRepository.save(user);
         }
     }
-    
+
     public User partialChangeUser(Integer id, User userPartial) {
         User existingUser = userRepository.findById(id)
                 .orElseThrow(() -> new InvalidUserException("User not found with ID: " + id));
@@ -150,13 +148,9 @@ public class UserServiceImp implements UserService {
         existingUser.setEmploymentType(updatedUser.getEmploymentType());
         existingUser.setPhone(updatedUser.getPhone());
         existingUser.setEmail(updatedUser.getEmail());
-
-        // Only update password if a new one is provided
         if (updatedUser.getPassword() != null && !updatedUser.getPassword().isEmpty()) {
             existingUser.setPassword(encryptPassword(updatedUser.getPassword()));
         }
-
-        // Update roleId if provided
         if (updatedUser.getRoleId() != null) {
             existingUser.setRoleId(updatedUser.getRoleId());
         }
@@ -167,8 +161,7 @@ public class UserServiceImp implements UserService {
     public void markUserAsInactive(Integer id) {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("User not found with ID: " + id));
-
-        user.setUserActive(false);  // or user.setActive(false);
+        user.setUserActive(false);
         userRepository.save(user);
     }
 
@@ -177,21 +170,18 @@ public class UserServiceImp implements UserService {
         return encoder.encode(password);
     }
 
-
     public ResponseEntity<?> changePassword(ChangeExistingPassword request, UserCreationRequest userCreationRequest) {
 
         User user = userRepository.findByEmail(request.getEmail());
         if (user == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found.");
         }
-
         if (!passwordEncoder.matches(request.getOldPassword(), user.getPassword())) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Old password is incorrect.");
         }
         if (passwordEncoder.matches(request.getNewPassword(), user.getPassword())) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("New password cannot be the same as the old password.");
         }
-
         user.setPassword(passwordEncoder.encode(request.getNewPassword()));
         userRepository.save(user);
 
@@ -253,17 +243,12 @@ public class UserServiceImp implements UserService {
         predicates.add(cb.like(cb.lower(cb.trim(cb.coalesce(cb.function("TO_CHAR", String.class, root.get("alterEmergencyContact")), ""))), likeQuery));
         predicates.add(cb.like(cb.lower(cb.trim(cb.coalesce(cb.function("TO_CHAR", String.class, root.get("alterEmergencyHomePhoneNumber")), ""))), likeQuery));
         predicates.add(cb.like(cb.lower(cb.trim(cb.coalesce(cb.function("TO_CHAR", String.class, root.get("alterEmergencyWorkPhone")), ""))), likeQuery));
-
         // Boolean fields
         predicates.add(cb.like(cb.lower(cb.trim(cb.coalesce(cb.function("TO_CHAR", String.class, root.get("workInState")), ""))), likeQuery));
         predicates.add(cb.like(cb.lower(cb.trim(cb.coalesce(cb.function("TO_CHAR", String.class, root.get("liveInState")), ""))), likeQuery));
         predicates.add(cb.like(cb.lower(cb.trim(cb.coalesce(cb.function("TO_CHAR", String.class, root.get("isSupervisor")), ""))), likeQuery));
-
         // Zipcode (new field)
         predicates.add(cb.like(cb.lower(cb.trim(cb.coalesce(root.get("zipcode"), ""))), likeQuery));
-
-
-
         // Role join fields
         predicates.add(cb.like(cb.lower(cb.trim(cb.coalesce(roleJoin.get("name"), ""))), likeQuery));
         predicates.add(cb.like(cb.lower(cb.trim(cb.coalesce(roleJoin.get("code"), ""))), likeQuery));

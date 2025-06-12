@@ -25,7 +25,7 @@ public class LoginController {
             log.error("Invalid User Exception " + e);
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         } catch (Exception e) {
-            log.error("Exception while login "+e);
+            log.error("Exception while login " + e);
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
