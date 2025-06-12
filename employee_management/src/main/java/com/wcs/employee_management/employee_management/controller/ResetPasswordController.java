@@ -3,7 +3,6 @@ package com.wcs.employee_management.employee_management.controller;
 import com.wcs.employee_management.employee_management.DTO.ChangeExistingPassword;
 import com.wcs.employee_management.employee_management.DTO.ChangePasswordRequest;
 import com.wcs.employee_management.employee_management.DTO.UserCreationRequest;
-import com.wcs.employee_management.employee_management.entity.User;
 import com.wcs.employee_management.employee_management.exception.InvalidUserException;
 import com.wcs.employee_management.employee_management.repository.UserRepository;
 import com.wcs.employee_management.employee_management.service.UserService;
