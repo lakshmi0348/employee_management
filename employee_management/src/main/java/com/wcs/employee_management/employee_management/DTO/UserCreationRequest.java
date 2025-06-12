@@ -1,50 +1,163 @@
 package com.wcs.employee_management.employee_management.DTO;
 
+import com.wcs.employee_management.employee_management.entity.Role;
 import com.wcs.employee_management.employee_management.entity.User;
 import lombok.Getter;
 import lombok.Setter;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.Date;
-
 @Getter
 @Setter
-
 public class UserCreationRequest {
 
-    private String name;
-    private String last_name;
+    private String firstName;
+    private String lastName;
     private String password;
     private Long phone;
+    private Role role;
+    private String employeeId;
     private String department;
     private String email;
     private String gender;
+    private String jobTitle;
     private Integer roleId;
-    private LocalDate date_of_birth;
-    private LocalDate date_of_joining;
-    private String employment_type;
-    private String job_title;
-    private boolean userActive;
+    private LocalDate dateOfBirth;
+    private LocalDate dateOfJoining;
+    private String employmentType;
+    private boolean isUserActive;
+
+    // New fields from ALTER TABLE statements
+    private String middleName;
+    private String maidenName;
+    private Integer zipcode;
+    private String homeEmail;
+    private String businessEmail;
+    private Long homePhone;
+    private Long businessPhone;
+    private Long cellPhone;
+
+    private String division;
+    private String position;
+    private String dutyType;
+    private LocalDate hireDate;
+    private LocalDate originalHireDate;
+    private LocalDate terminationDate;
+    private String terminationReason;
+    private Boolean voluntaryTermination;
+    private LocalDate rehireDate;
+    private String rateType;
+    private Double rate;
+    private String payFrequency;
+    private String payFrequencyText;
+    private String homeDepartment;
+    private String departmentText;
+
+    private Long hourlyRate2;
+    private Long hourlyRate3;
+
+    // Existing benefit/class/supervisor/emergency info
+    private Long benefitClassCode;
+    private String benefitDescription;
+    private Long benefitAccrualRate;
+    private String benefitStatus;
+    private Long classCode;
+    private String classDescription;
+    private Long classAccrualRate;
+    private String classStatus;
+    private String supervisorName;
+    private String supervisorReport;
+    private Boolean isSupervisor;
+    private byte[] photograph;
+    private String maritalStatus;
+    private String ethnicGroup;
+    private String eeoClass;
+    private String ssn;
+    private Boolean workInState;
+    private Boolean liveInState;
+    private String citizenship;
+    private String emergencyContact;
+    private Long emergencyHomePhoneNumber;
+    private Long emergencyWorkPhone;
+    private String emergencyContactRelation;
+    private Long alterEmergencyContact;
+    private Long alterEmergencyHomePhoneNumber;
+    private Long alterEmergencyWorkPhone;
+    private String city;
+    private String country;
 
     public User getUser() {
         User user = new User();
-        user.setFullName(name);
-        user.setLastName(last_name);
-        user.setDateOfBirth(date_of_birth);
+        user.setFirstName(firstName);
+        user.setLastName(lastName);
+        user.setDateOfBirth(dateOfBirth);
         user.setDepartment(department);
         user.setGender(gender);
-        user.setDateOfJoining(date_of_joining);
-        user.setEmploymentType(employment_type);
-        user.setJobTitle(job_title);
+        user.setDateOfJoining(dateOfJoining);
+        user.setEmploymentType(employmentType);
+        user.setJobTitle(jobTitle);
         user.setPassword(encryptPassword(password));
         user.setEmail(email);
+        user.setEmployeeId(employeeId);
         user.setRoleId(roleId);
         user.setPhone(phone);
-        user.setUserActive(userActive);
+        user.setUserActive(isUserActive);
+        user.setMiddleName(middleName);
+        user.setMaidenName(maidenName);
+        user.setZipcode(zipcode);
+        user.setHomeEmail(homeEmail);
+        user.setBusinessEmail(businessEmail);
+        user.setHomePhone(homePhone);
+        user.setBusinessPhone(businessPhone);
+        user.setCellPhone(cellPhone);
+        user.setDivision(division);
+        user.setPosition(position);
+        user.setDutyType(dutyType);
+        user.setHireDate(hireDate);
+        user.setOriginalHireDate(originalHireDate);
+        user.setTerminationDate(terminationDate);
+        user.setTerminationReason(terminationReason);
+        user.setVoluntaryTermination(voluntaryTermination);
+        user.setRehireDate(rehireDate);
+        user.setRateType(rateType);
+        user.setRate(BigDecimal.valueOf(rate));
+        user.setPayFrequency(payFrequency);
+        user.setPayFrequencyText(payFrequencyText);
+        user.setHomeDepartment(homeDepartment);
+        user.setDepartmentText(departmentText);
+        user.setHourlyRate2(hourlyRate2);
+        user.setHourlyRate3(hourlyRate3);
+        user.setBenefitClassCode(benefitClassCode);
+        user.setBenefitDescription(benefitDescription);
+        user.setBenefitAccrualRate(benefitAccrualRate);
+        user.setBenefitStatus(benefitStatus);
+        user.setClassCode(classCode);
+        user.setClassDescription(classDescription);
+        user.setClassAccrualRate(classAccrualRate);
+        user.setClassStatus(classStatus);
+        user.setSupervisorName(supervisorName);
+        user.setSupervisorReport(supervisorReport);
+        user.setIsSupervisor(isSupervisor);
+        user.setPhotograph(photograph);
+        user.setMaritalStatus(maritalStatus);
+        user.setEthnicGroup(ethnicGroup);
+        user.setEeoClass(eeoClass);
+        user.setSsn(ssn);
+        user.setWorkInState(workInState);
+        user.setLiveInState(liveInState);
+        user.setCitizenship(citizenship);
+        user.setEmergencyContact(emergencyContact);
+        user.setEmergencyHomePhoneNumber(emergencyHomePhoneNumber);
+        user.setEmergencyWorkPhone(emergencyWorkPhone);
+        user.setEmergencyContactRelation(emergencyContactRelation);
+        user.setAlterEmergencyContact(alterEmergencyContact);
+        user.setAlterEmergencyHomePhoneNumber(alterEmergencyHomePhoneNumber);
+        user.setAlterEmergencyWorkPhone(alterEmergencyWorkPhone);
+        user.setCity(city);
+        user.setCountry(country);
         return user;
     }
-
 
     private String encryptPassword(String password) {
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();

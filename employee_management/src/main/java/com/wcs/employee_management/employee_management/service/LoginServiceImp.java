@@ -43,10 +43,33 @@ public class LoginServiceImp implements LoginService {
                 List.of(user.getRole().getCode())
         );
 
-        return new LoginResponse(
+        LoginResponse response = new LoginResponse(
                 user.getId(),
-                user.getFullName(),
+                user.getFirstName(),
                 user.getLastName(),
+                user.getMiddleName(),
+                user.getMaidenName(),
+                user.getZipcode(),
+                user.getHomeEmail(),
+                user.getBusinessEmail(),
+                user.getHomePhone(),
+                user.getBusinessPhone(),
+                user.getCellPhone(),
+                user.getDivision(),
+                user.getPosition(),
+                user.getDutyType(),
+                user.getHireDate(),
+                user.getOriginalHireDate(),
+                user.getTerminationDate(),
+                user.getTerminationReason(),
+                user.getVoluntaryTermination(),
+                user.getRehireDate(),
+                user.getRateType(),
+                user.getRate(),
+                user.getPayFrequency(),
+                user.getPayFrequencyText(),
+                user.getHomeDepartment(),
+                user.getDepartmentText(),
                 user.getDateOfBirth(),
                 user.getDepartment(),
                 user.getEmploymentType(),
@@ -57,7 +80,40 @@ public class LoginServiceImp implements LoginService {
                 user.getPhone(),
                 token,
                 user.getRole(),
-                user.isUserActive()
+                user.isUserActive(),
+                user.getHourlyRate3(),
+                user.getHourlyRate2(),
+                user.getBenefitClassCode(),
+                user.getBenefitDescription(),
+                user.getBenefitAccrualRate(),
+                user.getBenefitStatus(),
+                user.getClassCode(),
+                user.getClassDescription(),
+                user.getClassAccrualRate(),
+                user.getClassStatus(),
+                user.getSupervisorName(),
+                user.getSupervisorReport(),
+                user.getIsSupervisor(),
+                user.getPhotograph(),
+                user.getMaritalStatus(),
+                user.getEthnicGroup(),
+                user.getEeoClass(),
+                user.getSsn(),
+                user.getWorkInState(),
+                user.getLiveInState(),
+                user.getCitizenship(),
+                user.getEmergencyContact(),
+                user.getEmergencyHomePhoneNumber(),
+                user.getEmergencyWorkPhone(),
+                user.getEmergencyContactRelation(),
+                user.getAlterEmergencyContact(),
+                user.getAlterEmergencyHomePhoneNumber(),
+                user.getAlterEmergencyWorkPhone(),
+                user.getCity(),      // ✅ added city
+                user.getCountry()    // ✅ added country
         );
+
+        return response;
     }
+
 }

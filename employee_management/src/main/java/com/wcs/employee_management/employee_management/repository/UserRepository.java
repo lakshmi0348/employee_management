@@ -13,6 +13,10 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     @Query("SELECT u FROM User u WHERE LOWER(u.email) = LOWER(:email)")
     User findByEmail(@Param("email") String email);
 
+
+    @Query(value = "SELECT nextval('wcs00')", nativeQuery = true)
+    Integer getNextUserId();
+
     List<User> findByIsUserActive(boolean isUserActive);
 
 }

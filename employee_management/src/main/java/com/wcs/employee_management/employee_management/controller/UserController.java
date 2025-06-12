@@ -4,6 +4,7 @@ import com.wcs.employee_management.employee_management.DTO.UserCreationRequest;
 import com.wcs.employee_management.employee_management.DTO.UserResponseDTO;
 import com.wcs.employee_management.employee_management.entity.User;
 import com.wcs.employee_management.employee_management.exception.InvalidUserException;
+import com.wcs.employee_management.employee_management.exception.UserValidatingException;
 import com.wcs.employee_management.employee_management.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +14,9 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @RestController
@@ -24,18 +27,20 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-    @PreAuthorize("hasRole('ADMIN')")
+   //@PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/create")
     public ResponseEntity<Object> createUser(@RequestBody UserCreationRequest userCreateRequest) {
         try {
             User createdUser = userService.createUser(userCreateRequest);
             return new ResponseEntity<>(createdUser, HttpStatus.CREATED);
-        } catch (InvalidUserException e) {
-            log.warn("User creation failed: {}", e.getMessage());
-            return new ResponseEntity<>("Unable to create user details", HttpStatus.BAD_REQUEST);
-        } catch (Exception e) {
-            log.error("Unexpected error during user creation", e);
-            return new ResponseEntity<>("Internal server error", HttpStatus.INTERNAL_SERVER_ERROR);
+        } catch (UserValidatingException ex) {
+            // Automatically handled by @ExceptionHandler if global handler is configured.
+            throw ex;
+        } catch (Exception ex) {
+            Map<String, Object> error = new HashMap<>();
+            error.put("status", HttpStatus.INTERNAL_SERVER_ERROR.value());
+            error.put("message", "Internal server error");
+            return new ResponseEntity<>(error, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
 

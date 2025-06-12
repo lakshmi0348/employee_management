@@ -1,7 +1,11 @@
 package com.wcs.employee_management.employee_management.controller;
 
+import com.wcs.employee_management.employee_management.DTO.ChangeExistingPassword;
 import com.wcs.employee_management.employee_management.DTO.ChangePasswordRequest;
+import com.wcs.employee_management.employee_management.DTO.UserCreationRequest;
+import com.wcs.employee_management.employee_management.entity.User;
 import com.wcs.employee_management.employee_management.exception.InvalidUserException;
+import com.wcs.employee_management.employee_management.repository.UserRepository;
 import com.wcs.employee_management.employee_management.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,6 +19,8 @@ public class ResetPasswordController {
 
     @Autowired
     private UserService userService;
+    @Autowired
+    private UserRepository userRepository;
     @PostMapping("/resetPassword")
     public ResponseEntity<String> resetPasswordSecure(@RequestBody ChangePasswordRequest request) {
         try {
@@ -27,5 +33,14 @@ public class ResetPasswordController {
                     .body("An error occurred while resetting the password.");
         }
     }
+
+@PostMapping("/changePassword")
+        public ResponseEntity<?> changePassword(@RequestBody ChangeExistingPassword request,
+                UserCreationRequest userCreationRequest) {
+    if (userCreationRequest == null) {
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("User not authenticated.");
+    }
+            return userService.changePassword(request, userCreationRequest);
+        }
 
 }
