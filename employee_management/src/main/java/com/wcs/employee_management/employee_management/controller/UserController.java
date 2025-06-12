@@ -4,7 +4,6 @@ import com.wcs.employee_management.employee_management.DTO.UserCreationRequest;
 import com.wcs.employee_management.employee_management.DTO.UserResponseDTO;
 import com.wcs.employee_management.employee_management.entity.User;
 import com.wcs.employee_management.employee_management.exception.InvalidUserException;
-import com.wcs.employee_management.employee_management.exception.UserValidatingException;
 import com.wcs.employee_management.employee_management.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,9 +13,8 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+
 
 @Slf4j
 @RestController
@@ -132,6 +130,4 @@ public class UserController {
                     .body("Error marking user as INACTIVE: " + e.getMessage());
         }
     }
-
-
 }

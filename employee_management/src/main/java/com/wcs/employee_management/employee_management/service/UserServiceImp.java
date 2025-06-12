@@ -114,21 +114,73 @@ public class UserServiceImp implements UserService {
 
         if (userPartial.getFirstName() != null) existingUser.setFirstName(userPartial.getFirstName());
         if (userPartial.getLastName() != null) existingUser.setLastName(userPartial.getLastName());
-        if (userPartial.getDateOfBirth() != null) existingUser.setDateOfBirth(userPartial.getDateOfBirth());
-        if (userPartial.getGender() != null) existingUser.setGender(userPartial.getGender());
-        if (userPartial.getDepartment() != null) existingUser.setDepartment(userPartial.getDepartment());
-        if (userPartial.getJobTitle() != null) existingUser.setJobTitle(userPartial.getJobTitle());
-        if (userPartial.getDateOfJoining() != null) existingUser.setDateOfJoining(userPartial.getDateOfJoining());
-        if (userPartial.getEmploymentType() != null) existingUser.setEmploymentType(userPartial.getEmploymentType());
-        if (userPartial.getPhone() != null) existingUser.setPhone(userPartial.getPhone());
-        if (userPartial.getEmail() != null) existingUser.setEmail(userPartial.getEmail());
-
+        if (userPartial.getMiddleName() != null) existingUser.setMiddleName(userPartial.getMiddleName());
+        if (userPartial.getMaidenName() != null) existingUser.setMaidenName(userPartial.getMaidenName());
         if (userPartial.getPassword() != null && !userPartial.getPassword().isEmpty()) {
             existingUser.setPassword(encryptPassword(userPartial.getPassword()));
         }
-        if (userPartial.getRoleId() != null) {
-            existingUser.setRoleId(userPartial.getRoleId());
-        }
+        if (userPartial.getEmail() != null) existingUser.setEmail(userPartial.getEmail());
+        if (userPartial.getPhone() != null) existingUser.setPhone(userPartial.getPhone());
+        if (userPartial.getRoleId() != null) existingUser.setRoleId(userPartial.getRoleId());
+        if (userPartial.getEmployeeId() != null) existingUser.setEmployeeId(userPartial.getEmployeeId());
+        if (userPartial.getDateOfBirth() != null) existingUser.setDateOfBirth(userPartial.getDateOfBirth());
+        if (userPartial.getGender() != null) existingUser.setGender(userPartial.getGender());
+        if (userPartial.getJobTitle() != null) existingUser.setJobTitle(userPartial.getJobTitle());
+        if (userPartial.getDepartment() != null) existingUser.setDepartment(userPartial.getDepartment());
+        if (userPartial.getDateOfJoining() != null) existingUser.setDateOfJoining(userPartial.getDateOfJoining());
+        if (userPartial.getEmploymentType() != null) existingUser.setEmploymentType(userPartial.getEmploymentType());
+        if (userPartial.getHourlyRate2() != null) existingUser.setHourlyRate2(userPartial.getHourlyRate2());
+        if (userPartial.getHourlyRate3() != null) existingUser.setHourlyRate3(userPartial.getHourlyRate3());
+        if (userPartial.getBenefitClassCode() != null) existingUser.setBenefitClassCode(userPartial.getBenefitClassCode());
+        if (userPartial.getBenefitDescription() != null) existingUser.setBenefitDescription(userPartial.getBenefitDescription());
+        if (userPartial.getBenefitAccrualRate() != null) existingUser.setBenefitAccrualRate(userPartial.getBenefitAccrualRate());
+        if (userPartial.getBenefitStatus() != null) existingUser.setBenefitStatus(userPartial.getBenefitStatus());
+        if (userPartial.getClassCode() != null) existingUser.setClassCode(userPartial.getClassCode());
+        if (userPartial.getClassDescription() != null) existingUser.setClassDescription(userPartial.getClassDescription());
+        if (userPartial.getClassAccrualRate() != null) existingUser.setClassAccrualRate(userPartial.getClassAccrualRate());
+        if (userPartial.getClassStatus() != null) existingUser.setClassStatus(userPartial.getClassStatus());
+        if (userPartial.getSupervisorName() != null) existingUser.setSupervisorName(userPartial.getSupervisorName());
+        if (userPartial.getSupervisorReport() != null) existingUser.setSupervisorReport(userPartial.getSupervisorReport());
+        if (userPartial.getIsSupervisor() != null) existingUser.setIsSupervisor(userPartial.getIsSupervisor());
+        if (userPartial.getPhotograph() != null) existingUser.setPhotograph(userPartial.getPhotograph());
+        if (userPartial.getMaritalStatus() != null) existingUser.setMaritalStatus(userPartial.getMaritalStatus());
+        if (userPartial.getEthnicGroup() != null) existingUser.setEthnicGroup(userPartial.getEthnicGroup());
+        if (userPartial.getEeoClass() != null) existingUser.setEeoClass(userPartial.getEeoClass());
+        if (userPartial.getSsn() != null) existingUser.setSsn(userPartial.getSsn());
+        if (userPartial.getWorkInState() != null) existingUser.setWorkInState(userPartial.getWorkInState());
+        if (userPartial.getLiveInState() != null) existingUser.setLiveInState(userPartial.getLiveInState());
+        if (userPartial.getCitizenship() != null) existingUser.setCitizenship(userPartial.getCitizenship());
+        if (userPartial.getEmergencyContact() != null) existingUser.setEmergencyContact(userPartial.getEmergencyContact());
+        if (userPartial.getEmergencyHomePhoneNumber() != null) existingUser.setEmergencyHomePhoneNumber(userPartial.getEmergencyHomePhoneNumber());
+        if (userPartial.getEmergencyWorkPhone() != null) existingUser.setEmergencyWorkPhone(userPartial.getEmergencyWorkPhone());
+        if (userPartial.getEmergencyContactRelation() != null) existingUser.setEmergencyContactRelation(userPartial.getEmergencyContactRelation());
+        if (userPartial.getAlterEmergencyContact() != null) existingUser.setAlterEmergencyContact(userPartial.getAlterEmergencyContact());
+        if (userPartial.getAlterEmergencyHomePhoneNumber() != null) existingUser.setAlterEmergencyHomePhoneNumber(userPartial.getAlterEmergencyHomePhoneNumber());
+        if (userPartial.getAlterEmergencyWorkPhone() != null) existingUser.setAlterEmergencyWorkPhone(userPartial.getAlterEmergencyWorkPhone());
+        if (userPartial.getZipcode() != null) existingUser.setZipcode(userPartial.getZipcode());
+        if (userPartial.getHomeEmail() != null) existingUser.setHomeEmail(userPartial.getHomeEmail());
+        if (userPartial.getBusinessEmail() != null) existingUser.setBusinessEmail(userPartial.getBusinessEmail());
+        if (userPartial.getHomePhone() != null) existingUser.setHomePhone(userPartial.getHomePhone());
+        if (userPartial.getBusinessPhone() != null) existingUser.setBusinessPhone(userPartial.getBusinessPhone());
+        if (userPartial.getCellPhone() != null) existingUser.setCellPhone(userPartial.getCellPhone());
+        if (userPartial.getDivision() != null) existingUser.setDivision(userPartial.getDivision());
+        if (userPartial.getPosition() != null) existingUser.setPosition(userPartial.getPosition());
+        if (userPartial.getDutyType() != null) existingUser.setDutyType(userPartial.getDutyType());
+        if (userPartial.getHireDate() != null) existingUser.setHireDate(userPartial.getHireDate());
+        if (userPartial.getOriginalHireDate() != null) existingUser.setOriginalHireDate(userPartial.getOriginalHireDate());
+        if (userPartial.getTerminationDate() != null) existingUser.setTerminationDate(userPartial.getTerminationDate());
+        if (userPartial.getTerminationReason() != null) existingUser.setTerminationReason(userPartial.getTerminationReason());
+        if (userPartial.getVoluntaryTermination() != null) existingUser.setVoluntaryTermination(userPartial.getVoluntaryTermination());
+        if (userPartial.getRehireDate() != null) existingUser.setRehireDate(userPartial.getRehireDate());
+        if (userPartial.getRateType() != null) existingUser.setRateType(userPartial.getRateType());
+        if (userPartial.getRate() != null) existingUser.setRate(userPartial.getRate());
+        if (userPartial.getPayFrequency() != null) existingUser.setPayFrequency(userPartial.getPayFrequency());
+        if (userPartial.getPayFrequencyText() != null) existingUser.setPayFrequencyText(userPartial.getPayFrequencyText());
+        if (userPartial.getHomeDepartment() != null) existingUser.setHomeDepartment(userPartial.getHomeDepartment());
+        if (userPartial.getDepartmentText() != null) existingUser.setDepartmentText(userPartial.getDepartmentText());
+        if (userPartial.getCity() != null) existingUser.setCity(userPartial.getCity());
+        if (userPartial.getCountry() != null) existingUser.setCountry(userPartial.getCountry());
+
         return userRepository.save(existingUser);
     }
 
