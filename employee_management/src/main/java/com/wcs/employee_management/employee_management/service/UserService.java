@@ -30,7 +30,7 @@ public interface UserService {
 
     void resetPasswordWithVerification(ChangePasswordRequest request);
 
-    ResponseEntity<?> changePassword(ChangeExistingPassword request, UserCreationRequest userCreationRequest);
+    ResponseEntity<?> changePassword(ChangeExistingPassword request);
 }
 
 

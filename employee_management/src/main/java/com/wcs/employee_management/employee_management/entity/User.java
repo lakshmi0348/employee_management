@@ -18,8 +18,8 @@ import java.time.LocalDate;
 public class User {
 
     @Id
-    //  @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "wcs00")
-    //@SequenceGenerator(name = "wcs00", sequenceName = "wcs00", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "wcs00")
+    @SequenceGenerator(name = "wcs00", sequenceName = "wcs00", allocationSize = 1)
     private Integer id;
 
     @Column(name = "first_name", columnDefinition = "varchar(200)", nullable = false)

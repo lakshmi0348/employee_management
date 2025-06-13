@@ -1,10 +1,15 @@
 package com.wcs.employee_management.employee_management.controller;
 
+import com.wcs.employee_management.employee_management.DTO.LoginResponse;
 import com.wcs.employee_management.employee_management.DTO.UserCreationRequest;
 import com.wcs.employee_management.employee_management.DTO.UserResponseDTO;
 import com.wcs.employee_management.employee_management.entity.User;
 import com.wcs.employee_management.employee_management.exception.InvalidUserException;
 import com.wcs.employee_management.employee_management.service.UserService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -26,6 +31,28 @@ public class UserController {
     private UserService userService;
 
     @PreAuthorize("hasRole('ADMIN')")
+    @Operation(
+            summary = "User Login",
+            description = "This Api will be used to create the userDetails Admin only access this Api using token ",
+            responses = {
+                    @ApiResponse(
+                            responseCode = "200",
+                            description = "user creation successful",
+                            content = @Content(mediaType = "application/json",
+                                    schema = @Schema(implementation = LoginResponse.class))
+                    ),
+                    @ApiResponse(
+                            responseCode = "400",
+                            description = "Invalid credentials (bad request)",
+                            content = @Content
+                    ),
+                    @ApiResponse(
+                            responseCode = "500",
+                            description = "Internal server error",
+                            content = @Content
+                    )
+            }
+    )
     @PostMapping("/create")
     public ResponseEntity<Object> createUser(@RequestBody UserCreationRequest userCreateRequest) {
         try {
@@ -37,7 +64,28 @@ public class UserController {
             return new ResponseEntity<>(ex, HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
-
+    @Operation(
+            summary = "GET user By Id",
+            description = "This Api will be used to get  the userDetails By Id  this Api will be accessed by using token ",
+            responses = {
+                    @ApiResponse(
+                            responseCode = "200",
+                            description = "all users retrieved successfully",
+                            content = @Content(mediaType = "application/json",
+                                    schema = @Schema(implementation = LoginResponse.class))
+                    ),
+                    @ApiResponse(
+                            responseCode = "400",
+                            description = "Invalid credentials (bad request)",
+                            content = @Content
+                    ),
+                    @ApiResponse(
+                            responseCode = "500",
+                            description = "Internal server error",
+                            content = @Content
+                    )
+            }
+    )
     @GetMapping("/getUserById")
     public ResponseEntity<User> getUserById(@RequestParam(required = false) String id) {
         try {
@@ -56,6 +104,23 @@ public class UserController {
         }
     }
 
+    @Operation(
+            summary = "Search Functionality",
+            description = "This Api will be used to search the userDetails  only accessing by using Api using token ",
+            responses = {
+                    @ApiResponse(
+                            responseCode = "200",
+                            description = "Search text is found",
+                            content = @Content(mediaType = "application/json",
+                                    schema = @Schema(implementation = LoginResponse.class))
+                    ),
+                    @ApiResponse(
+                            responseCode = "500",
+                            description = "Internal server error",
+                            content = @Content
+                    )
+            }
+    )
     @GetMapping("/search")
     public ResponseEntity<List<UserResponseDTO>> searchUsers(@RequestParam String searchText) {
         try {
@@ -66,6 +131,24 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
     }
+    @Operation(
+            summary = "Get Users",
+            description = "This Api will be used to get the userDetails  only accessing by using Api using token ",
+            responses = {
+                    @ApiResponse(
+                            responseCode = "200",
+                            description = "Getting the user details",
+                            content = @Content(mediaType = "application/json",
+                                    schema = @Schema(implementation = LoginResponse.class))
+                    ),
+                    @ApiResponse(
+                            responseCode = "500",
+                            description = "Internal server error",
+                            content = @Content
+                    )
+            }
+    )
+
 
     @GetMapping("/getUsers")
     public ResponseEntity<List<User>> getUsers(@RequestParam(required = false) Boolean isActive) {
@@ -90,6 +173,23 @@ public class UserController {
         }
     }
 
+    @Operation(
+            summary = "Update the users",
+            description = "This Api will be used to update the userDetails by id only accessing by using Api using token ",
+            responses = {
+                    @ApiResponse(
+                            responseCode = "200",
+                            description = "updating User details",
+                            content = @Content(mediaType = "application/json",
+                                    schema = @Schema(implementation = LoginResponse.class))
+                    ),
+                    @ApiResponse(
+                            responseCode = "500",
+                            description = "Internal server error",
+                            content = @Content
+                    )
+            }
+    )
     @PutMapping("/updateUsers/{id}")
     public ResponseEntity<?> updateUser(@PathVariable Integer id, @RequestBody User user) {
         try {
@@ -105,6 +205,24 @@ public class UserController {
         }
     }
 
+
+    @Operation(
+            summary = "partialUpdate the users",
+            description = "This Api will be used to update the userDetails by id only accessing by using Api using token ",
+            responses = {
+                    @ApiResponse(
+                            responseCode = "200",
+                            description = "updating User details",
+                            content = @Content(mediaType = "application/json",
+                                    schema = @Schema(implementation = LoginResponse.class))
+                    ),
+                    @ApiResponse(
+                            responseCode = "500",
+                            description = "Internal server error",
+                            content = @Content
+                    )
+            }
+    )
     @PatchMapping("/updateUsers/{id}")
     public ResponseEntity<?> patchUser(@PathVariable Integer id, @RequestBody User userPatch) {
         try {
@@ -119,7 +237,23 @@ public class UserController {
                     .body("An error occurred while patching the user.");
         }
     }
-
+    @Operation(
+            summary = "Delete the users",
+            description = "This Api will be used to delete  the userDetails by navigating userActive status accessing by using Api using token ",
+            responses = {
+                    @ApiResponse(
+                            responseCode = "200",
+                            description = "Deleting the user details By migrating Active status ",
+                            content = @Content(mediaType = "application/json",
+                                    schema = @Schema(implementation = LoginResponse.class))
+                    ),
+                    @ApiResponse(
+                            responseCode = "500",
+                            description = "Internal server error",
+                            content = @Content
+                    )
+            }
+    )
     @DeleteMapping("/deleteUser/{id}")
     public ResponseEntity<?> deleteUser(@PathVariable Integer id) {
         try {

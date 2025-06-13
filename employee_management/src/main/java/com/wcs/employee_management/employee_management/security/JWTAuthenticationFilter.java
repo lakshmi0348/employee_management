@@ -25,7 +25,6 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
 
     private static final String AUTH_HEADER = "Authorization";
     private static final String TOKEN_PREFIX = "Bearer ";
-    private static final List<String> PUBLIC_APIS = List.of("/auth/login", "/user/create");
 
     private final JWTUtil jwtUtil;
     private final UserRepository userRepository;
@@ -38,8 +37,14 @@ public class JWTAuthenticationFilter extends OncePerRequestFilter {
     @Override
     protected boolean shouldNotFilter(HttpServletRequest request) {
         String path = request.getServletPath();
-        return path.equals("/api/login");
+
+        // Skip filter for public paths and Swagger
+        return path.equals("/login") ||
+                path.equals("/create") ||
+                path.equals("/resetPassword") ||
+                path.contains("swagger");
     }
+
 
     @Override
     protected void doFilterInternal(HttpServletRequest request,

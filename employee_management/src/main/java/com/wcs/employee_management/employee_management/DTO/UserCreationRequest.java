@@ -27,8 +27,6 @@ public class UserCreationRequest {
     private LocalDate dateOfJoining;
     private String employmentType;
     private boolean isUserActive;
-
-    // New fields from ALTER TABLE statements
     private String middleName;
     private String maidenName;
     private Integer zipcode;
@@ -37,7 +35,6 @@ public class UserCreationRequest {
     private Long homePhone;
     private Long businessPhone;
     private Long cellPhone;
-
     private String division;
     private String position;
     private String dutyType;
@@ -53,11 +50,8 @@ public class UserCreationRequest {
     private String payFrequencyText;
     private String homeDepartment;
     private String departmentText;
-
     private Long hourlyRate2;
     private Long hourlyRate3;
-
-    // Existing benefit/class/supervisor/emergency info
     private Long benefitClassCode;
     private String benefitDescription;
     private Long benefitAccrualRate;
@@ -97,9 +91,9 @@ public class UserCreationRequest {
         user.setDateOfJoining(dateOfJoining);
         user.setEmploymentType(employmentType);
         user.setJobTitle(jobTitle);
-        user.setPassword(encryptPassword(password));
+       // user.setPassword(encryptPassword(password));
         user.setEmail(email);
-        user.setEmployeeId(employeeId);
+     //   user.setEmployeeId(employeeId);
         user.setRoleId(roleId);
         user.setPhone(phone);
         user.setUserActive(isUserActive);

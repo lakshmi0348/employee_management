@@ -28,18 +28,24 @@ public class SecurityConfig {
         this.jwtAuthFilter = jwtAuthFilter;
     }
 
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http
-                .csrf().disable()
-                .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/login", "/resetPassword", "/error").permitAll() // Public endpoints
-                        .anyRequest().authenticated()             // Secure everything else
+                          http.csrf().disable()
+                         .formLogin(form -> form.disable())
+                         .httpBasic(basic -> basic.disable())
+                         .authorizeHttpRequests(auth -> auth
+                        .requestMatchers(
+                                "/login", "/resetPassword", "/create",
+                                "/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html","/error"
+                        ).permitAll()
+                        .anyRequest().authenticated()
                 )
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
-
         return http.build();
     }
+
+
 
     @Bean
     public PasswordEncoder passwordEncoder() {

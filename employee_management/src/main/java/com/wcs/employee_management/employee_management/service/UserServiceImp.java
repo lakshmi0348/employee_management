@@ -20,6 +20,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.security.SecureRandom;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
@@ -37,12 +38,18 @@ public class UserServiceImp implements UserService {
     private UserRepository userRepository;
     @Autowired
     private PasswordEncoder passwordEncoder;
+    @Autowired
+    private EmailService emailService;
 
     @Transactional
     public User createUser(UserCreationRequest request) {
         User user = request.getUser();
-        Integer nextId = userRepository.getNextUserId();
-        user.setId(nextId);
+        Integer empId = userRepository.getNextUserId();
+        String employeeId = String.format("WCS%03d", empId);
+        user.setEmployeeId(employeeId);
+        String generatedPassword = generatePassword(9);
+        user.setPassword(encryptPassword(generatedPassword));
+        emailService.sendPasswordEmail(user.getEmail(), generatedPassword);
         return userRepository.save(user);
     }
 
@@ -222,7 +229,7 @@ public class UserServiceImp implements UserService {
         return encoder.encode(password);
     }
 
-    public ResponseEntity<?> changePassword(ChangeExistingPassword request, UserCreationRequest userCreationRequest) {
+    public ResponseEntity<?> changePassword(ChangeExistingPassword request) {
 
         User user = userRepository.findByEmail(request.getEmail());
         if (user == null) {
@@ -307,6 +314,23 @@ public class UserServiceImp implements UserService {
 
         return predicates;
     }
+
+
+
+        private static final String CHARACTERS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*";
+        private static final SecureRandom random = new SecureRandom();
+
+        public static String generatePassword(int length) {
+            StringBuilder sb = new StringBuilder(length);
+            for (int i = 0; i < length; i++) {
+                int rndCharAt = random.nextInt(CHARACTERS.length());
+                char rndChar = CHARACTERS.charAt(rndCharAt);
+                sb.append(rndChar);
+            }
+            return sb.toString();
+        }
+
+
 
 }
 
