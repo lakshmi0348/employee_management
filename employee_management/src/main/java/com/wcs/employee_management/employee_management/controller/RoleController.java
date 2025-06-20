@@ -1,6 +1,7 @@
 package com.wcs.employee_management.employee_management.controller;
 
 import com.wcs.employee_management.employee_management.DTO.LoginResponse;
+import com.wcs.employee_management.employee_management.DTO.RoleResponse;
 import com.wcs.employee_management.employee_management.exception.InvalidRoleException;
 import com.wcs.employee_management.employee_management.service.RoleService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -55,7 +56,6 @@ public class RoleController {
             } else {
                 roles = roleService.getAllRoles(); // fallback to return all roles
             }
-
             return new ResponseEntity<>(roles, HttpStatus.OK);
 
         } catch (InvalidRoleException e) {
@@ -126,6 +126,10 @@ public class RoleController {
     @PutMapping("/updateRole/{id}")
     public ResponseEntity<?> updateRole(@PathVariable Integer id, @RequestBody Role role) {
         try {
+            if(id==null)
+            {
+                return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Id is not present:");
+            }
             Role updatedRole = roleService.updateRole(id, role);
             return ResponseEntity.ok(updatedRole);
         } catch (Exception e) {
@@ -189,5 +193,7 @@ public class RoleController {
                     .body("Error deleting role: " + e.getMessage());
         }
     }
+
+
 
 }

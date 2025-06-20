@@ -32,7 +32,7 @@ public class UserController {
 
     @PreAuthorize("hasRole('ADMIN')")
     @Operation(
-            summary = "User Login",
+            summary = "creating User",
             description = "This Api will be used to create the userDetails Admin only access this Api using token ",
             responses = {
                     @ApiResponse(
@@ -70,13 +70,13 @@ public class UserController {
             responses = {
                     @ApiResponse(
                             responseCode = "200",
-                            description = "all users retrieved successfully",
+                            description = "User details retrieved successfully",
                             content = @Content(mediaType = "application/json",
                                     schema = @Schema(implementation = LoginResponse.class))
                     ),
                     @ApiResponse(
                             responseCode = "400",
-                            description = "Invalid credentials (bad request)",
+                            description = "Invalid credentials (bad request) ",
                             content = @Content
                     ),
                     @ApiResponse(
@@ -105,12 +105,12 @@ public class UserController {
     }
 
     @Operation(
-            summary = "Search Functionality",
+            summary = "Search Text",
             description = "This Api will be used to search the userDetails  only accessing by using Api using token ",
             responses = {
                     @ApiResponse(
                             responseCode = "200",
-                            description = "Search text is found",
+                            description = "Search details is found",
                             content = @Content(mediaType = "application/json",
                                     schema = @Schema(implementation = LoginResponse.class))
                     ),
@@ -132,8 +132,8 @@ public class UserController {
         }
     }
     @Operation(
-            summary = "Get Users",
-            description = "This Api will be used to get the userDetails  only accessing by using Api using token ",
+            summary = "Get All Users",
+            description = "This Api will be used to get the  all userDetails  only accessing by using Api using token ",
             responses = {
                     @ApiResponse(
                             responseCode = "200",
@@ -208,11 +208,11 @@ public class UserController {
 
     @Operation(
             summary = "partialUpdate the users",
-            description = "This Api will be used to update the userDetails by id only accessing by using Api using token ",
+            description = "This Api will be used to change the userDetails by id only accessing by using Api using token ",
             responses = {
                     @ApiResponse(
                             responseCode = "200",
-                            description = "updating User details",
+                            description = "changing User details",
                             content = @Content(mediaType = "application/json",
                                     schema = @Schema(implementation = LoginResponse.class))
                     ),
